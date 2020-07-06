@@ -98,7 +98,6 @@ theme: landscape
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-deploy:
   provider: pages
   skip-cleanup: true
   github-token: $GH_TOKEN
@@ -106,7 +105,7 @@ deploy:
   on:
     branch: master
   local-dir: public
-  
+
 suka_theme:
   search:
     enable: true
