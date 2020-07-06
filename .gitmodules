@@ -1,0 +1,6 @@
+[submodule "themes/cake"]
+	path = themes/cake
+	url = https://github.com/JiangTJ/hexo-theme-cake
+[submodule "themes/suka"]
+	path = themes/suka
+	url = https://github.com/SukkaW/hexo-theme-suka.git
