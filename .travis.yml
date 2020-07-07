@@ -5,7 +5,7 @@ node_js:
 cache: npm
 branches:
   only:
-    - master # build master branch only
+    - development # build development branch only
 
 before_script: ## 根据你所用的主题和自定义的不同，这里会有所不同
   - cd themes 
@@ -24,6 +24,7 @@ deploy:
   skip-cleanup: true
   github-token: $GH_TOKEN
   keep-history: true
+  target-branch: master #部署到master分支
   on:
-    branch: master
+    branch: development
   local-dir: public
