@@ -4,3 +4,6 @@
 [submodule "themes/suka"]
 	path = themes/suka
 	url = https://github.com/SukkaW/hexo-theme-suka.git
+[submodule "themes/next"]
+	path = themes/next
+	url = https://github.com/iissnan/hexo-theme-next
