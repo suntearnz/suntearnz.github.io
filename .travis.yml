@@ -14,9 +14,12 @@ before_script: ## 根据你所用的主题和自定义的不同，这里会有�
   - cd ../.. # 返回站点根目录
 
 script:
-  - pwd
+  - pwd   # check the current path in root path
+  - hexo clean # clean the hexo
   - hexo generate # generate static files
 deploy:
+  type: 'git'
+  branch: gh-pages
   provider: pages
   skip-cleanup: true
   github-token: $GH_TOKEN
