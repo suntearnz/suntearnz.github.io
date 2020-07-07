@@ -8,10 +8,7 @@ branches:
     - development # build development branch only
 
 before_script: ## 根据你所用的主题和自定义的不同，这里会有所不同
-  - cd themes 
-  - cd suka
-  - npm install --production # 安装 Suka 主题的依赖
-  - cd ../.. # 返回站点根目录
+
 
 script:
   - pwd   # check the current path in root path
