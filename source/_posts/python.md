@@ -3,6 +3,7 @@ layout: post/coding
 title: python
 categories: ["program"]
 date: 2020-07-08 14:29:59
+categories: [programing, python]
 tags: ["program", "python"]
 ---
 
@@ -44,7 +45,7 @@ Python 中的注释有三种形式：
 """
 ```
 
-## 数据类型
+### 数据类型
 
 Python3 中有六个标准的数据类型：
 
