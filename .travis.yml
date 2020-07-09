@@ -18,10 +18,11 @@ deploy:
   type: "git"
   branch: gh-pages
   provider: pages
-  skip-cleanup: true
+  skip-cleanup: t
   github-token: $GH_TOKEN
   keep-history: true
   target-branch: master #部署到master分支
   on:
     branch: development
   local-dir: public
+  fqdn: suntearinheart.com
