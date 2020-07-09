@@ -5,20 +5,25 @@ type: "about"
 comments: false
 ---
 
-本人老司机，钢铁直男
+Steel straight man
+Half Michelin Star
+Hiking，Cook, Badmition
 
-硕士，毕业于南京大学。现坐标：南京
+Bachelor degree, graduated from Zhengzhou University
+Master's degree, graduated from Massey University. Current coordinates: Auckland
 
-二手架构师 + 全栈攻城狮 + 杂工（哪里需要点哪里）
+Second-hand architect + full-stack + handyman
 
-信仰技术，热衷分享。
+Believe in technology, keen to share.
 
-技能清单：
+Skill List：
 
-- 编程语言：Java、JavaScript、Shell、C、C++、C#
-- 数据库：Mysql、Redis、OracleDB、Hbase
-- 框架：Spring、SpringBoot、Mybatis、Dubbo、Shiro、Quartz、Ehcache、jdbc-sharding
-- 分布式服务：ZooKeeper、Kafka、Elasticsearch、FastDFS
-- 容器：Nginx、Tomcat、Jetty、Resin、Docker
-- 前端：React、Vue、Angular、Webpack、Nodejs、jQuery、JSP、Freemark、Velocity、EazyUI
-- 研发工具：Git、Svn、Maven、Gitlab、Jenkins、Nexus
+- Language：C/C++, Python, Swift, TS, Rust, Go
+- Database：Mysql, Postgres
+- Framework ：Nest
+- Embedded： Vxworks, Linux, Uboot, PPC, ARM, Atmel
+- Networks: TCP/IP Stack, Vlan, STP, RIP, OSPF
+- Contrainer ：Nginx、Docker
+- Frontend ：React、Vue、Angular、Webpack、Nodejs、jQuery
+- APP: SwiftUI
+- Tools ：Git、Svn、Maven、Gitlab、Jenkins、Nexus, Jira
