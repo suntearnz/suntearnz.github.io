@@ -2,15 +2,15 @@ sudo: false
 language: node_js
 node_js:
   - 10 # use nodejs v10 LTS
-cache: npm
+cache: yarn
 branches:
   only:
     - development # build development branch only
 
 before_script: ## 根据你所用的主题和自定义的不同，这里会有所不同
   - rm  package-lock.json
-  - npm install hexo-generator-sitemap --save
-  - npm i --save hexo-wordcount
+  # - npm install hexo-generator-sitemap --save
+  #- npm i --save hexo-wordcount
 
 script:
   - ls
