@@ -1,9 +1,8 @@
 ---
 layout: post/coding
-title: python
-categories: ["program"]
+title: pythonß
 date: 2020-07-08 14:29:59
-categories: [programing, python]
+categories: [python]
 tags: ["program", "python"]
 ---
 

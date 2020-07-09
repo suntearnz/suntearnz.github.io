@@ -11,9 +11,9 @@ before_script: ## 根据你所用的主题和自定义的不同，这里会有�
   - rm  package-lock.json
   - npm install hexo-generator-sitemap --save
   - npm i --save hexo-wordcount
-  - yarn install
 
 script:
+  - yarn
   - hexo clean # clean the hexo
   - hexo generate # generate static files
 deploy:
