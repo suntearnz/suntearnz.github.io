@@ -30,7 +30,7 @@
 <meta property="og:description" content="Small Talk about BootLoaderauthor ：Fred [TOC] Introduction Note：This article aims to prodive an empirical introductory reference solution  Prerequisites Good at C。 Certain programming experience. Cert">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-07-08T21:21:43.000Z">
-<meta property="article:modified_time" content="2020-07-09T04:15:07.315Z">
+<meta property="article:modified_time" content="2020-07-16T03:50:40.599Z">
 <meta property="article:author" content="Fred Lei">
 <meta property="article:tag" content="bootloader">
 <meta name="twitter:card" content="summary">
@@ -196,7 +196,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Small-Talk-about-BootLoader"><span class="nav-number">1.</span> <span class="nav-text">Small Talk about BootLoader</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction"><span class="nav-number">1.1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Prerequisites"><span class="nav-number">1.2.</span> <span class="nav-text">Prerequisites</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Main-Topic"><span class="nav-number">1.3.</span> <span class="nav-text">Main Topic</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bootloader"><span class="nav-number">1.4.</span> <span class="nav-text">Bootloader</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#startupmethod"><span class="nav-number">1.5.</span> <span class="nav-text">startupmethod</span></a></li></ol></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Small-Talk-about-BootLoader"><span class="nav-number">1.</span> <span class="nav-text">Small Talk about BootLoader</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction"><span class="nav-number">1.1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Prerequisites"><span class="nav-number">1.2.</span> <span class="nav-text">Prerequisites</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Main-Topic"><span class="nav-number">1.3.</span> <span class="nav-text">Main Topic</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bootloader"><span class="nav-number">1.4.</span> <span class="nav-text">Bootloader</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#startupmethod"><span class="nav-number">1.5.</span> <span class="nav-text">startupmethod</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Detail-of-boot-loader-in-ATxmega256A3BU"><span class="nav-number">1.6.</span> <span class="nav-text">Detail of boot loader in ATxmega256A3BU</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Init-the-peripherals"><span class="nav-number">1.7.</span> <span class="nav-text">Init the peripherals</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Main-process"><span class="nav-number">1.8.</span> <span class="nav-text">Main process</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Give-the-right-to-application"><span class="nav-number">1.9.</span> <span class="nav-text">Give the right to application</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Congratulation"><span class="nav-number">1.10.</span> <span class="nav-text">Congratulation</span></a></li></ol></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -312,10 +312,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-07-09 09:21:43 / Modified: 16:15:07" itemprop="dateCreated datePublished" datetime="2020-07-09T09:21:43+12:00">2020-07-09</time>
+              <time title="Created: 2020-07-09 09:21:43" itemprop="dateCreated datePublished" datetime="2020-07-09T09:21:43+12:00">2020-07-09</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-07-16 15:50:40" itemprop="dateModified" datetime="2020-07-16T15:50:40+12:00">2020-07-16</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -359,6 +365,23 @@
 <p>Definition of Bootloader: Bootloader is a small program that is executed before the operating system runs. Through this small program, we can initialize hardware devices and establish a mapping table of memory space, so as to establish an appropriate system software and hardware environment, and finally call the operating system. The kernel is ready. This means that if we want an operating system to run on our board, we must first perform some basic configuration and initialization on our board before we can boot the operating system into it. We will analyze the specific operations completed in the Bootloader later. In embedded systems, the loading and startup tasks of the entire system are completely completed by Boot Loader. For example, in an embedded system based on ARM7TDMI core, the system usually starts from address 0x00000000 when it is powered on or reset, and the Boot Loader program of the system is usually arranged at this address. </p>
 <p>The bootloader is implemented based on a specific hardware platform, so it is almost impossible to build a universal bootloader for all embedded systems. Different processor architectures have different bootloaders. The bootloader not only depends on the CPU architecture, but also depends on embedding. The configuration of the board-level equipment of the distributed system. For two different boards, even if they are using the same processor, if you want the Bootloader program running on one board to run on another board, you usually need to modify the source program of the Bootloader.</p>
 <h3 id="startupmethod"><a href="#startupmethod" class="headerlink" title="startupmethod"></a>startupmethod</h3><p>Bootloader’s startup methods mainly include network startup mode, disk startup mode and Flash startup mode.</p>
+<h3 id="Detail-of-boot-loader-in-ATxmega256A3BU"><a href="#Detail-of-boot-loader-in-ATxmega256A3BU" class="headerlink" title="Detail of boot loader in ATxmega256A3BU"></a>Detail of boot loader in ATxmega256A3BU</h3><p>There are two section in this MCU.  one is application secton and the other is boot loader.  The size of boot section is 8k.  we can use the ICE device to config the value of the FUSES  to choose the starting address when doing the poweron.  Normally we like to jump to bootloader firstly to do some basic initialization.<br>Most of the MCU will disable the interrupt when doing the the power-on action. but I like to do one clear disable action</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cli()</span><br></pre></td></tr></table></figure>
+
+<p>Then init the clock. System clock is a very important thing that need to be done firstly. It’s like when we play one group dance, we need play the music and every dancer need dance with the music by themself.  The system clock seems as the music meter. Based on the meter, every parts can know when and how they can co-work together and when they should do and when not. For the system clock, we need to select the source of the clock, becausing the default internal source is a little low.  After we have done the selection of the clock. we can do the prescaler of the source.  because there are lots of peripheral with different clock requirement.  So there are three Prescalers that we can config to get the different clock that we want.<br>and the precedure to enable the PLL as below</p>
+<ol>
+<li>Enable reference clock source</li>
+<li>Set the multiplication factor and select the clock refercence for the PLL</li>
+<li>Wait until the clock reference source is stable</li>
+<li>Enable the PLL</li>
+</ol>
+<p>Also when we practice the group dance, if someone make mistake or fault. and the director want to  rehearse again. Normally we need to replay the music. For the MCU or CPU, it is the same.<br>we need stop the PLL before a new configuration can be written.</p>
+<p>After the config of the system clock is done, the next step is configing the interrupt vector table to booloader section. Because in our design, the bootloader application can work by itself.<br>So there is no need to let the application and bootloader to share the same vector. and also when the application is crashed, the bootloader can work by itself. we only need to config the IVSEL to move the interrupt vector table to bootloader section.</p>
+<p>In the following steps,  we will init the peripherals that the board has one by one. I don’t think there need special order.  because the interrupt is still in disable status. From my view, the peripherals are in the same priority, they are all slave for CPU.</p>
+<h3 id="Init-the-peripherals"><a href="#Init-the-peripherals" class="headerlink" title="Init the peripherals"></a>Init the peripherals</h3><p>In our board, the peripherals are Bluetooth, flash, Uart. We will use the Bluetooth to let the bootloader has the communication ability. and the flash will  be used to store the application image. and the Uart is the protocol that need be used for bluetooth.  Even there is no special requirement for init order. But I perfer to do them as:  flash, Uart, Bluetooth. This just like when you hold a wedding event,  you will try  to list out the seats for your family and friends. Depending on the relationship.</p>
+<h3 id="Main-process"><a href="#Main-process" class="headerlink" title="Main process"></a>Main process</h3><p>For the MCU, this is only a main thread to do the loop that is triggered by event(interrupt, including the timer). In the main loop,  it will check the flag in EEPROM, if updating flag has been set, it will load the new firmware from the external flash to application section. else it will try to start from application section. Before they do this, they will do the CRC checking. CRC checking is important thing to do. Just like when we try to drive car out, we like to walk around to check the tyres are ok or not. After the checking is pass,  let’s jump to application codes.<br>if not,  we need fix every faults like changing the tyres, repairing the engine. </p>
+<h3 id="Give-the-right-to-application"><a href="#Give-the-right-to-application" class="headerlink" title="Give the right to application"></a>Give the right to application</h3><p>Cool! After we find the application codes is the real one that we want,  we need release the right to application.  Reset the interrupt vector to application section, and update the PC value to 0</p>
+<h3 id="Congratulation"><a href="#Congratulation" class="headerlink" title="Congratulation"></a>Congratulation</h3><p>All Done!</p>
 
     </div>
 
