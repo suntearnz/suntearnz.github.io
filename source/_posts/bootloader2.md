@@ -43,3 +43,45 @@ The bootloader is implemented based on a specific hardware platform, so it is al
 ### startupmethod
 
 Bootloader's startup methods mainly include network startup mode, disk startup mode and Flash startup mode.
+
+### Detail of boot loader in ATxmega256A3BU
+
+There are two section in this MCU.  one is application secton and the other is boot loader.  The size of boot section is 8k.  we can use the ICE device to config the value of the FUSES  to choose the starting address when doing the poweron.  Normally we like to jump to bootloader firstly to do some basic initialization.
+Most of the MCU will disable the interrupt when doing the the power-on action. but I like to do one clear disable action
+
+```C
+cli()
+```
+
+Then init the clock. System clock is a very important thing that need to be done firstly. It's like when we play one group dance, we need play the music and every dancer need dance with the music by themself.  The system clock seems as the music meter. Based on the meter, every parts can know when and how they can co-work together and when they should do and when not. For the system clock, we need to select the source of the clock, becausing the default internal source is a little low.  After we have done the selection of the clock. we can do the prescaler of the source.  because there are lots of peripheral with different clock requirement.  So there are three Prescalers that we can config to get the different clock that we want.
+and the precedure to enable the PLL as below
+
+1. Enable reference clock source
+2. Set the multiplication factor and select the clock refercence for the PLL
+3. Wait until the clock reference source is stable
+4. Enable the PLL
+
+Also when we practice the group dance, if someone make mistake or fault. and the director want to  rehearse again. Normally we need to replay the music. For the MCU or CPU, it is the same.
+we need stop the PLL before a new configuration can be written.
+
+After the config of the system clock is done, the next step is configing the interrupt vector table to booloader section. Because in our design, the bootloader application can work by itself.
+So there is no need to let the application and bootloader to share the same vector. and also when the application is crashed, the bootloader can work by itself. we only need to config the IVSEL to move the interrupt vector table to bootloader section.
+
+In the following steps,  we will init the peripherals that the board has one by one. I don't think there need special order.  because the interrupt is still in disable status. From my view, the peripherals are in the same priority, they are all slave for CPU.
+
+### Init the peripherals
+
+In our board, the peripherals are Bluetooth, flash, Uart. We will use the Bluetooth to let the bootloader has the communication ability. and the flash will  be used to store the application image. and the Uart is the protocol that need be used for bluetooth.  Even there is no special requirement for init order. But I perfer to do them as:  flash, Uart, Bluetooth. This just like when you hold a wedding event,  you will try  to list out the seats for your family and friends. Depending on the relationship.
+
+### Main process
+
+For the MCU, this is only a main thread to do the loop that is triggered by event(interrupt, including the timer). In the main loop,  it will check the flag in EEPROM, if updating flag has been set, it will load the new firmware from the external flash to application section. else it will try to start from application section. Before they do this, they will do the CRC checking. CRC checking is important thing to do. Just like when we try to drive car out, we like to walk around to check the tyres are ok or not. After the checking is pass,  let's jump to application codes.
+if not,  we need fix every faults like changing the tyres, repairing the engine. 
+
+### Give the right to application
+
+Cool! After we find the application codes is the real one that we want,  we need release the right to application.  Reset the interrupt vector to application section, and update the PC value to 0
+
+### Congratulation
+
+All Done!
